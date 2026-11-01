@@ -1,0 +1,15 @@
+# ConfigMap armazena configurações não sensíveis
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: notifications-api-config
+  labels:
+    app: notifications-api
+data:
+  ASPNETCORE_ENVIRONMENT: "Production"
+  RabbitMQ__HostName: "rabbitmq-service"
+  RabbitMQ__Port: "5672"
+  RabbitMQ__Exchange: "fcg.users.events"
+  RabbitMQ__Queue: "notifications.user-created"
+  RabbitMQ__RoutingKey: "user.created"

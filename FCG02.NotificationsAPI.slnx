@@ -1,0 +1,5 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/FCG02.NotificationsAPI.API/FCG02.NotificationsAPI.API.csproj" />
+  </Folder>
+</Solution>

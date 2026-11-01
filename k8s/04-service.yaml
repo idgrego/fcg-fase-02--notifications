@@ -1,0 +1,16 @@
+# Service garante que cada container terá sempre o mesmo IP
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: notifications-api-service
+  labels:
+    app: notifications-api
+spec:
+  type: ClusterIP
+  selector:
+    app: notifications-api
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
