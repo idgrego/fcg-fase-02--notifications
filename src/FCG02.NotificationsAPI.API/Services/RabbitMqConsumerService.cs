@@ -35,7 +35,7 @@ public class RabbitMqConsumerService : BackgroundService
         var queue = _configuration["RabbitMQ:Queue"] ?? "notifications.user-created";
         var routingKey = _configuration["RabbitMQ:RoutingKey"] ?? "user.created";
 
-        _logger.LogInformation("⏳ Conectando o consumidor ao RabbitMQ em {Host}:{Port}...", hostName, port);
+        _logger.LogDebug("⏳ Conectando o consumidor ao RabbitMQ em {Host}:{Port}...", hostName, port);
 
         var factory = new ConnectionFactory
         {
@@ -92,14 +92,14 @@ public class RabbitMqConsumerService : BackgroundService
                     cancellationToken: cancellationToken
                 );
 
-                _logger.LogInformation("✅ Consumidor do RabbitMQ ativo e aguardando eventos na fila '{Queue}'...", queue);
+                _logger.LogDebug("✅ Consumidor do RabbitMQ ativo e aguardando eventos na fila '{Queue}'...", queue);
 
                 // Conexão e binding concluídos com sucesso! Sai do loop de tentativas
                 break;
             }
             catch (OperationCanceledException)
             {
-                _logger.LogInformation("🛑 Encerrando o consumidor do RabbitMQ...");
+                _logger.LogDebug("🛑 Encerrando o consumidor do RabbitMQ...");
                 return;
             }
             catch (Exception ex)
@@ -123,7 +123,7 @@ public class RabbitMqConsumerService : BackgroundService
         }
         catch (OperationCanceledException)
         {
-            _logger.LogInformation("🛑 Encerrando o consumidor do RabbitMQ...");
+            _logger.LogDebug("🛑 Encerrando o consumidor do RabbitMQ...");
         }
     }
 
@@ -133,7 +133,7 @@ public class RabbitMqConsumerService : BackgroundService
         var messageJson = Encoding.UTF8.GetString(body);
         try
         {
-            _logger.LogInformation("📩 Mensagem recebida da fila '{Queue}'. RoutingKey: {RoutingKey}", ea.Exchange, ea.RoutingKey);
+            _logger.LogInformation("🔔 [NotificationsAPI] Push recebido da exchange '{Exchange}' (RoutingKey: '{RoutingKey}'). Processando envio do e-mail...", ea.Exchange, ea.RoutingKey);
 
             var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
             var userCreatedEvent = JsonSerializer.Deserialize<UserCreatedIntegrationEvent>(messageJson, options);

@@ -101,6 +101,23 @@ docker compose logs -f notifications-api
 
 ---
 
+### 3.3. Dicionário de Variáveis de Ambiente
+
+As seguintes variáveis configuram o comportamento da **NotificationsAPI** em contêineres e ambientes produtivos:
+
+| Variável de Ambiente | Descrição | Exemplo de Valor |
+|---|---|---|
+| `ASPNETCORE_ENVIRONMENT` | Perfil de execução do ASP.NET Core | `Development` ou `Production` |
+| `RabbitMQ__HostName` | Endereço do broker RabbitMQ | `rabbitmq` ou `localhost` |
+| `RabbitMQ__Port` | Porta do broker RabbitMQ | `5672` |
+| `RabbitMQ__UserName` | Usuário de autenticação no RabbitMQ | `guest` |
+| `RabbitMQ__Password` | Senha de autenticação no RabbitMQ | `guest` |
+| `RabbitMQ__Exchange` | Exchange de origem dos eventos de usuários | `fcg.users.events` |
+| `RabbitMQ__Queue` | Fila durável para consumo dos eventos de novos usuários | `notifications.user-created` |
+| `RabbitMQ__RoutingKey` | Routing Key para consumir eventos de cadastro | `user.created` |
+
+---
+
 ## 4. Mensageria Assíncrona & Eventos Consumidos
 
 ### 4.1. Evento: `UserCreatedEvent` (Boas-Vindas)
